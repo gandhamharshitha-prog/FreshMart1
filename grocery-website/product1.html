@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Products - FreshMart</title>
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- FreshMart CSS -->
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+</head>
+<body>
+    <!-- PRODUCT PAGE NAVBAR -->
+<nav class="navbar navbar-expand-lg bg-white shadow-sm">
+    <div class="container">
+        <!-- LOGO -->
+        <a class="navbar-brand" href="index.html">
+            <i class="fa-solid fa-leaf"></i>
+            FreshMart
+        </a>
+        <!-- MOBILE MENU BUTTON -->
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#productNavbar"
+            aria-controls="productNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- NAVIGATION -->
+        <div
+            class="collapse navbar-collapse"
+            id="productNavbar">
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html#categories">
+                        Categories
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.html#products">
+                        Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html#offers">
+                        Offers
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html#benefits">
+                        Why Us
+                    </a>
+                </li>
+            </ul>
+            <!-- CART -->
+            <button
+    type="button"
+    class="btn btn-outline-success"
+    id="productCartButton"
+    onclick="window.location.href=`index.html?openCart=true`;">
+    <i class="fa-solid fa-cart-shopping"></i>
+    Cart
+    <span
+        id="productCartCount"
+        class="badge bg-success ms-1">
+        0
+    </span>
+</button>
+<button
+    type="button"
+    class="btn btn-outline-danger ms-2"
+    id="wishlistNavButton"
+    onclick="window.location.href=`index.html#wishlist`;">
+    <i class="fa-regular fa-heart"></i>
+    Wishlist
+    <span
+        id="wishlistCount"
+        class="badge bg-danger ms-1">
+        0
+    </span>
+</button>
+<a
+    href="orders.html"
+    class="btn btn-outline-primary ms-2">
+    <i class="fa-solid fa-box"></i>
+    My Orders
+</a>
+        </div>
+    </div>
+</nav>
+<!-- PRODUCT 1 - TOMATO -->
+<section class="product-details py-5" id="tomato">
+    <div class="container mb-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="index.html">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="index.html#products">Products</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Fresh Tomato
+            </li>
+        </ol>
+    </nav>
+</div>
+        <div class="row g-5 align-items-center">
+            <!-- Tomato Image -->
+            <div class="col-lg-6">
+                <div class="product-details-image">
+                    <a href="product1.html?product=tomato">
+                        <img
+                        src="images/tomato.jpg"
+                        alt="Fresh Tomato"
+                        class="img-fluid">
+                    </a>
+                </div>
+            </div>
+            <!-- Tomato Information -->
+            <div class="col-lg-6">
+                <span class="badge bg-success mb-3">
+                    Fresh Product
+                </span>
+                <h1>
+                    Fresh Tomato
+                </h1>
+                <!-- Rating -->
+                <div class="mb-3">
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-regular fa-star text-warning"></i>
+                    <span class="ms-2">
+                        4.5 (25 Reviews)
+                    </span>
+                </div>
+                <!-- Price -->
+                <div class="product-detail-price mb-3">
+                    <span class="current-price">
+                        ₹40
+                        <button
+    type="button"
+    class="btn btn-outline-danger wishlist-button">
+    <i class="fa-regular fa-heart"></i>
+    Add to Wishlist
+</button>
+                    </span>
+                    <span class="old-price text-muted text-decoration-line-through ms-3">
+                        ₹45
+                    </span>
+                    <span class="badge bg-danger ms-2">
+                        10% OFF
+                    </span>
+                </div>
+                <p class="text-muted">
+                    Fresh and high-quality tomatoes,
+                    carefully selected for your everyday
+                    cooking needs.
+                </p>
+                <!-- Quantity Selector -->
+<div class="mb-4">
+    <strong>Quantity:</strong>
+    <div class="quantity-selector mt-2">
+        <button type="button" class="quantity-btn">
+            −
+        </button>
+        <span class="quantity-value">
+            1
+        </span>
+        <button type="button" class="quantity-btn">
+            +
+        </button>
+    </div>
+    <small class="text-muted">
+        1 kg per quantity
+    </small>
+</div>
+                <!-- Add To Cart -->
+                <button
+    type="button"
+    class="btn btn-success btn-lg product-cart-button"
+    data-name="Fresh Tomato"
+    data-price="40"
+    data-image="tomato.jpg">
+    <i class="fa-solid fa-cart-shopping"></i>
+    Add to Cart
+  </button>
+  <button
+    type="button"
+    class="btn btn-primary btn-lg buy-now-button">
+    <i class="fa-solid fa-bolt"></i>
+    Buy Now
+</button>
+  <a href="index.html#products"
+   class="btn btn-outline-success btn-lg back-products-btn">
+    <i class="fa-solid fa-arrow-left"></i>
+    Back to Products
+</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- PRODUCT 2 - APPLE -->
+<section class="product-details py-5 bg-light" id="apple">
+    <div class="container mb-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="index.html">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="index.html#products">Products</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Fresh Apple
+            </li>
+        </ol>
+    </nav>
+</div>
+        <div class="row g-5 align-items-center">
+            <!-- Apple Image -->
+            <div class="col-lg-6">
+                <div class="product-details-image">
+                    <img
+                        src="images/apple.jpg"
+                        alt="Fresh Apple"
+                        class="img-fluid">
+                </div>
+            </div>
+            <!-- Apple Information -->
+            <div class="col-lg-6">
+                <span class="badge bg-success mb-3">
+                    Fresh Product
+                </span>
+                <h1>
+                    Fresh Apple
+                </h1>
+                <!-- Rating -->
+                <div class="mb-3">
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-regular fa-star text-warning"></i>
+                    <span class="ms-2">
+                        4.5 (30 Reviews)
+                    </span>
+                </div>
+                <!-- Price -->
+                <div class="product-detail-price mb-3">
+                    <span class="current-price">
+                        ₹120
+                        <button
+    type="button"
+    class="btn btn-outline-danger wishlist-button">
+    <i class="fa-regular fa-heart"></i>
+    Add to Wishlist
+</button>
+                    </span>
+                    <span class="old-price text-muted text-decoration-line-through ms-3">
+                        ₹140
+                    </span>
+                    <span class="badge bg-danger ms-2">
+                        14% OFF
+                    </span>
+                </div>
+                <p class="text-muted">
+                    Fresh and juicy apples, carefully selected
+                    for quality, taste and freshness.
+                </p>
+                 <!-- Quantity Selector -->
+<div class="mb-4">
+    <strong>Quantity:</strong>
+    <div class="quantity-selector mt-2">
+        <button type="button" class="quantity-btn">
+            −
+        </button>
+        <span class="quantity-value">
+            1
+        </span>
+        <button type="button" class="quantity-btn">
+            +
+        </button>
+    </div>
+    <small class="text-muted">
+        1 kg per quantity
+    </small>
+</div>
+                <!-- Add To Cart -->
+                <button
+    type="button"
+    class="btn btn-success btn-lg product-cart-button"
+    data-name="Fresh Apple"
+    data-price="120"
+    data-image="apple.jpg">
+    <i class="fa-solid fa-cart-shopping"></i>
+    Add to Cart
+</button>
+<button
+    type="button"
+    class="btn btn-primary btn-lg buy-now-button">
+    <i class="fa-solid fa-bolt"></i>
+    Buy Now
+</button>
+<a href="index.html#products"
+   class="btn btn-outline-success btn-lg back-products-btn">
+    <i class="fa-solid fa-arrow-left"></i>
+    Back to Products
+</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- PRODUCT 3 - MILK -->
+<section class="product-details py-5" id="milk">
+    <div class="container mb-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="index.html">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="index.html#products">Products</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Fresh Milk
+            </li>
+        </ol>
+    </nav>
+</div>
+        <div class="row g-5 align-items-center">
+            <!-- Milk Image -->
+            <div class="col-lg-6">
+                <div class="product-details-image">
+
+                    <img
+                        src="images/milk.jpg"
+                        alt="Fresh Milk"
+                        class="img-fluid">
+                </div>
+            </div>
+            <!-- Milk Information -->
+            <div class="col-lg-6">
+                <span class="badge bg-success mb-3">
+                    Fresh Product
+                </span>
+                <h1>
+                    Fresh Milk
+                </h1>
+                <!-- Rating -->
+                <div class="mb-3">
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-regular fa-star text-warning"></i>
+                    <span class="ms-2">
+                        4.5 (30 Reviews)
+                    </span>
+                </div>
+                <!-- Price -->
+                <div class="product-detail-price mb-3">
+                    <span class="current-price">
+                        ₹60
+                        <button
+    type="button"
+    class="btn btn-outline-danger wishlist-button">
+    <i class="fa-regular fa-heart"></i>
+    Add to Wishlist
+</button>
+                    </span>
+                    <span class="old-price text-muted text-decoration-line-through ms-3">
+                        ₹65
+                    </span>
+                    <span class="badge bg-danger ms-2">
+                        8% OFF
+                    </span>
+                </div>
+                <p class="text-muted">
+                    Fresh and nutritious milk, perfect for
+                    your daily breakfast, tea, coffee and
+                    cooking needs.
+                </p>
+                 <!-- Quantity Selector -->
+<div class="mb-4">
+    <strong>Quantity:</strong>
+    <div class="quantity-selector mt-2">
+        <button type="button" class="quantity-btn">
+            −
+        </button>
+        <span class="quantity-value">
+            1
+        </span>
+        <button type="button" class="quantity-btn">
+            +
+        </button>
+    </div>
+    <small class="text-muted">
+        1 litre quantity
+    </small>
+</div>
+                <!-- Add To Cart -->
+                <button
+    type="button"
+    class="btn btn-success btn-lg product-cart-button"
+    data-name="Fresh Milk"
+    data-price="60"
+    data-image="milk.jpg">
+    <i class="fa-solid fa-cart-shopping"></i>
+    Add to Cart
+</button>
+<button
+    type="button"
+    class="btn btn-primary btn-lg buy-now-button">
+    <i class="fa-solid fa-bolt"></i>
+    Buy Now
+</button>
+<a href="index.html#products"
+   class="btn btn-outline-success btn-lg back-products-btn">
+    <i class="fa-solid fa-arrow-left"></i>
+    Back to Products
+</a>
+        </div>
+    </div>
+</section>
+<!-- PRODUCT 4 - RICE -->
+<section class="product-details py-5 bg-light" id="rice">
+    <div class="container mb-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="index.html">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="index.html#products">Products</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                 Basmati Rice
+            </li>
+        </ol>
+    </nav>
+</div>
+        <div class="row g-5 align-items-center">
+            <!-- Rice Image -->
+            <div class="col-lg-6">
+                <div class="product-details-image">
+                    <img
+                        src="images/rice.jpg"
+                        alt="Premium Rice"
+                        class="img-fluid">
+                </div>
+            </div>
+            <!-- Rice Information -->
+            <div class="col-lg-6">
+                <span class="badge bg-success mb-3">
+                    Grocery Product
+                </span>
+                <h1>
+                    Basmati Rice
+                </h1>
+                <!-- Rating -->
+
+                <div class="mb-3">
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <i class="fa-regular fa-star text-warning"></i>
+                    <span class="ms-2">
+                        4.5 (40 Reviews)
+                    </span>
+                </div>
+                <!-- Price -->
+                <div class="product-detail-price mb-3">
+                    <span class="current-price">
+                        ₹350
+                        <button
+    type="button"
+    class="btn btn-outline-danger wishlist-button">
+    <i class="fa-regular fa-heart"></i>
+    Add to Wishlist
+</button>
+                    </span>
+                    <span class="old-price text-muted text-decoration-line-through ms-3">
+                        ₹440
+                    </span>
+                    <span class="badge bg-danger ms-2">
+                        14% OFF
+                    </span>
+                </div>
+                <p class="text-muted">
+                    Premium quality rice with excellent
+                    taste and texture, perfect for everyday
+                    meals and special dishes.
+                </p>
+                <!-- Quantity Selector -->
+<div class="mb-4">
+    <strong>Quantity:</strong>
+    <div class="quantity-selector mt-2">
+        <button type="button" class="quantity-btn">
+            −
+        </button>
+        <span class="quantity-value">
+            1
+        </span>
+        <button type="button" class="quantity-btn">
+            +
+        </button>
+    </div>
+    <small class="text-muted">
+        5 kg per quantity
+    </small>
+</div>
+                <!-- Add To Cart -->
+
+                <button
+    type="button"
+    class="btn btn-success btn-lg product-cart-button"
+    data-name="Basmati Rice"
+    data-price="120"
+    data-image="rice.jpg">
+    <i class="fa-solid fa-cart-shopping"></i>
+    Add to Cart
+</button>
+<button
+    type="button"
+    class="btn btn-primary btn-lg buy-now-button">
+    <i class="fa-solid fa-bolt"></i>
+    Buy Now
+</button>
+<a href="index.html#products"
+   class="btn btn-outline-success btn-lg back-products-btn">
+    <i class="fa-solid fa-arrow-left"></i>
+    Back to Products
+</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- =====================================================
+     BOOTSTRAP JAVASCRIPT
+===================================================== -->
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+<script>
+document.querySelectorAll(".quantity-selector").forEach(function(selector) {
+    const minusButton =
+        selector.querySelector(".quantity-btn:first-child");
+    const plusButton =
+        selector.querySelector(".quantity-btn:last-child");
+    const quantityValue =
+        selector.querySelector(".quantity-value");
+    minusButton.addEventListener("click", function() {
+        let quantity =
+            Number(quantityValue.textContent);
+        if (quantity > 1) {
+            quantity--;
+        }
+        quantityValue.textContent = quantity;
+    });
+    plusButton.addEventListener("click", function() {
+        let quantity =
+            Number(quantityValue.textContent);
+        quantity++;
+        quantityValue.textContent = quantity;
+    });
+});
+</script>
+
+// PRODUCT PAGE — ADD TO CART //
+
+<script>
+document.querySelectorAll(".product-cart-button").forEach(function(button) {
+    button.addEventListener("click", function() {
+        // Get product details
+        const productName = button.dataset.name;
+        const productPrice = Number(button.dataset.price);
+        const productImage = button.dataset.image;
+        // Get selected quantity
+        const productSection =
+            button.closest(".product-details");
+        const quantityValue =
+            productSection.querySelector(".quantity-value");
+        const quantity =
+            Number(quantityValue.textContent);
+        // Get existing cart
+        let cart =
+            JSON.parse(localStorage.getItem("freshMartCart")) || [];
+        // Check if product already exists
+        const existingProduct =
+            cart.find(function(product) {
+                return product.name === productName;
+            });
+        if (existingProduct) {
+            existingProduct.quantity += quantity;
+        } else {
+            cart.push({
+                name: productName,
+                price: productPrice,
+                image: productImage,
+                quantity: quantity
+            });
+        }
+        // Save cart
+        localStorage.setItem(
+            "freshMartCart",
+            JSON.stringify(cart)
+        );
+        alert(
+            quantity + " × " + productName + " added to cart!"
+        );
+    });
+});
+</script>
+
+</script>
+
+<script>
+//  DYNAMIC PRODUCT DISPLAY // 
+
+const productId = window.location.hash.substring(1);
+
+const productSections =
+    document.querySelectorAll(".product-details");
+
+productSections.forEach(function(section) {
+
+    if (productId && section.id !== productId) {
+        section.style.display = "none";
+    }
+
+});
+</script>
+<script>
+// PRODUCT PAGE CART COUNT // 
+
+function updateProductCartCount() {
+    const cart =
+        JSON.parse(localStorage.getItem("freshMartCart")) || [];
+    let totalQuantity = 0;
+    cart.forEach(function(product) {
+        totalQuantity += product.quantity;
+    });
+    const cartCount =
+        document.getElementById("productCartCount");
+    if (cartCount) {
+        cartCount.textContent = totalQuantity;
+    }
+}
+// Update when page loads
+updateProductCartCount();
+// Update when returning to this page
+window.addEventListener("pageshow", function() {
+    updateProductCartCount();
+});
+// Update when localStorage changes
+window.addEventListener("storage", function() {
+    updateProductCartCount();
+});
+</script>
+<script>
+// BUY NOW //
+
+document.querySelectorAll(".buy-now-button").forEach(function(button) {
+    button.addEventListener("click", function() {
+        const productSection =
+            button.closest(".product-details");
+        const addToCartButton =
+            productSection.querySelector(".product-cart-button");
+        const productName =
+            addToCartButton.dataset.name;
+        const productPrice =
+            Number(addToCartButton.dataset.price);
+        const productImage =
+            addToCartButton.dataset.image;
+        const quantity =
+            Number(
+                productSection.querySelector(".quantity-value").textContent
+            );
+        let cart =
+            JSON.parse(localStorage.getItem("freshMartCart")) || [];
+        const existingProduct =
+            cart.find(function(product) {
+                return product.name === productName;
+            });
+        if (existingProduct) {
+            existingProduct.quantity += quantity;
+        } else {
+            cart.push({
+                name: productName,
+                price: productPrice,
+                image: productImage,
+                quantity: quantity
+            });
+        }
+        localStorage.setItem(
+            "freshMartCart",
+            JSON.stringify(cart)
+        );
+        window.location.href =
+            "index.html?openCart=true";
+    });
+});
+</script>
+<script>
+// WISHLIST // 
+document.querySelectorAll(".wishlist-button").forEach(function(button) {
+    button.addEventListener("click", function() {
+        const productSection =
+            button.closest(".product-details");
+        const productButton =
+            productSection.querySelector(".product-cart-button");
+        const productName =
+            productButton.dataset.name;
+        let wishlist =
+            JSON.parse(localStorage.getItem("freshMartWishlist")) || [];
+        const existingProduct =
+            wishlist.includes(productName);
+        const icon =
+            button.querySelector("i");
+        if (existingProduct) {
+            wishlist =
+                wishlist.filter(function(name) {
+                    return name !== productName;
+                });
+            icon.className = "fa-regular fa-heart";
+            button.innerHTML =
+                '<i class="fa-regular fa-heart"></i> Add to Wishlist';
+        } else {
+            wishlist.push(productName);
+            button.innerHTML =
+                '<i class="fa-solid fa-heart"></i> Wishlisted';
+        }
+        localStorage.setItem(
+            "freshMartWishlist",
+            JSON.stringify(wishlist)
+        );
+    });
+});
+// Restore wishlist status
+document.querySelectorAll(".wishlist-button").forEach(function(button) {
+    const productSection =
+        button.closest(".product-details");
+    const productButton =
+        productSection.querySelector(".product-cart-button");
+    const productName =
+        productButton.dataset.name;
+    const wishlist =
+        JSON.parse(localStorage.getItem("freshMartWishlist")) || [];
+    if (wishlist.includes(productName)) {
+        button.innerHTML =
+            '<i class="fa-solid fa-heart"></i> Wishlisted';
+    }
+});
+</script>
+<script>
+// WISHLIST NAVBAR COUNT //
+function updateWishlistCount() {
+    const wishlist =
+        JSON.parse(localStorage.getItem("freshMartWishlist")) || [];
+    const wishlistCount =
+        document.getElementById("wishlistCount");
+    if (wishlistCount) {
+        wishlistCount.textContent = wishlist.length;
+    }
+}
+updateWishlistCount();
+window.addEventListener("pageshow", function() {
+    updateWishlistCount();
+});
+window.addEventListener("storage", function() {
+    updateWishlistCount();
+});
+</script>
+</body>
+</html>

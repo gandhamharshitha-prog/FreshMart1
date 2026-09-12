@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>FreshMart - My Orders</title>
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+</head>
+<body>
+<!--  NAVBAR -->
+<nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+    <div class="container">
+        <a
+            class="navbar-brand fw-bold text-success"
+            href="index.html">
+            <i class="fa-solid fa-cart-shopping"></i>
+            FreshMart
+        </a>
+        <a
+            href="index.html"
+            class="btn btn-outline-success">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Home
+        </a>
+    </div>
+</nav>
+<!-- MY ORDERS -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="fw-bold text-dark">
+                <i class="fa-solid fa-box text-success"></i>
+                My Orders (<span id="orderCount">0</span>)
+            </h1>
+            <button
+    type="button"
+    class="btn btn-outline-danger btn-sm mt-2"
+    onclick="clearAllOrders()">
+    <i class="fa-solid fa-trash"></i>
+    Clear All Orders
+</button>
+            <p class="text-muted">
+                View your previous FreshMart orders
+            </p>
+            <div id="orderFilters" class="d-flex justify-content-center flex-wrap gap-2 mt-3">
+    <button
+        class="btn btn-success btn-sm active-filter"
+        onclick="filterOrders('All',this)">
+        All Orders
+    </button>
+    <button
+        class="btn btn-outline-success btn-sm"
+        onclick="filterOrders('Order Placed',this)">
+        Order Placed
+    </button>
+    <button
+        class="btn btn-outline-primary btn-sm"
+        onclick="filterOrders('Processing',this)">
+        Processing
+    </button>
+    <button
+        class="btn btn-outline-warning btn-sm"
+        onclick="filterOrders('Shipped',this)">
+        Shipped
+    </button>
+    <button
+        class="btn btn-outline-success btn-sm"
+        onclick="filterOrders('Delivered',this)">
+        Delivered
+    </button>
+    <button
+        class="btn btn-outline-danger btn-sm"
+        onclick="filterOrders('Cancelled',this)">
+        Cancelled
+    </button>
+</div>
+        </div>
+        <!-- SEARCH & FILTER ORDERS -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="row g-3">
+            <!-- Search -->
+            <div class="col-md-5">
+                <label class="form-label fw-bold">
+                    <i class="fa-solid fa-magnifying-glass text-success"></i>
+                    Search Order
+                </label>
+                <input
+                    type="text"
+                    id="orderSearch"
+                    class="form-control"
+                    placeholder="Search by Order ID..."
+                    oninput="filterOrders()">
+            </div>
+            <!-- Status -->
+            <div class="col-md-3">
+                <label class="form-label fw-bold">
+                    <i class="fa-solid fa-filter text-success"></i>
+                    Status
+                </label>
+                <select
+                    id="orderStatusFilter"
+                    class="form-select"
+                    onchange="filterOrders()">
+                    <option value="All">All Orders</option>
+                    <option value="Order Placed">Order Placed</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
+            <!-- Sort -->
+            <div class="col-md-4">
+                <label class="form-label fw-bold">
+                    <i class="fa-solid fa-arrow-down-wide-short text-success"></i>
+                    Sort Orders
+                </label>
+                <select
+                    id="orderSort"
+                    class="form-select"
+                    onchange="filterOrders()">
+                    <option value="newest">
+                        Newest First
+                    </option>
+                    <option value="oldest">
+                        Oldest First
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- Orders will appear here -->
+         <div class="input-group mb-4 mx-auto" style="max-width: 500px;">
+    <span class="input-group-text">
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </span>
+    <input
+        type="text"
+        id="orderSearch"
+        class="form-control"
+        placeholder="Search by Order ID or Customer Name..."
+        onkeyup="searchOrders()">
+</div>
+<div
+    id="noOrdersFound"
+    class="text-center text-muted py-5"
+    style="display: none;">
+    <i class="fa-solid fa-box-open fa-3x mb-3"></i>
+    <h5>No orders found</h5>
+    <p>
+        Try another search or filter.
+    </p>
+</div>
+        <div id="ordersContainer">
+            <div class="text-center">
+                <i
+                    class="fa-solid fa-box-open text-muted"
+                    style="font-size:60px;">
+                </i>
+                <h4 class="mt-3">
+                    No Orders Yet
+                </h4>
+                <p class="text-muted">
+                    Your completed orders will appear here.
+                </p>
+                <a
+                    href="index.html#products"
+                    class="btn btn-success">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    Start Shopping
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- JAVASCRIPT -->
+<script>
+// LOAD ORDERS //
+const orders =
+    JSON.parse(
+        localStorage.getItem("freshMartOrders")
+    ) || [];
+const ordersContainer =
+    document.getElementById("ordersContainer");
+// DISPLAY ORDERS //
+if (orders.length > 0) {
+    ordersContainer.innerHTML = "";
+    orders.forEach(function(order) {
+        let itemsHTML = "";
+        order.items.forEach(function(product) {
+            const itemTotal =
+                product.price * product.quantity;
+            itemsHTML += `
+                <div class="d-flex align-items-center border-bottom py-3">
+                    <img
+                        src="${product.image}"
+                        alt="${product.name}"
+                        style="
+                            width:70px;
+                            height:70px;
+                            object-fit:contain;
+                        ">
+                    <div class="ms-3 flex-grow-1">
+                        <h6 class="mb-1">
+                            ${product.name}
+                        </h6>
+                        <small class="text-muted">
+                            ₹${product.price}
+                            ×
+                            ${product.quantity}
+                        </small>
+                    </div>
+                    <strong>
+                        ₹${itemTotal}
+                    </strong>
+                </div>
+            `;
+        });
+        ordersContainer.innerHTML += `
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between
+                                align-items-center flex-wrap mb-3">
+                        <div>
+                            <h5 class="mb-1">
+                                <i class="fa-solid fa-receipt
+                                          text-success"></i>
+                                Order #${order.id}
+                            </h5>
+                            <small class="text-muted">
+                                ${order.date}
+                            </small>
+                        </div>
+                        <span class="badge bg-success">
+                            ${order.status}
+                        </span>
+                        <div class="w-100 mt-3">
+    <div class="progress" style="height: 8px;">
+    <div
+        class="progress-bar"
+        role="progressbar"
+        style="
+            width: ${
+                order.status === "Order Placed"
+                    ? "25%"
+                    : order.status === "Processing"
+                    ? "50%"
+                    : order.status === "Shipped"
+                    ? "75%"
+                    : order.status === "Delivered"
+                    ? "100%"
+                    : "0%"
+            };
+        ">
+    </div>
+</div>
+    </div>
+    <div class="order-status-labels">
+    <span>Placed</span>
+    <span>Processing</span>
+    <span>Shipped</span>
+    <span>Delivered</span>
+</div>
+</div>
+                    </div>
+                    <div class="border rounded p-3 mb-3 bg-light">
+    <h6 class="mb-2">
+        <i class="fa-solid fa-user text-primary"></i>
+        Customer Details
+    </h6>
+    <p class="mb-1">
+        <strong>Name:</strong>
+        ${order.customerName || ""}
+    </p>
+    <p class="mb-1">
+        <strong>Phone:</strong>
+        ${order.phone || ""}
+    </p>
+    <p class="mb-1">
+        <strong>Address:</strong>
+        ${order.address || ""}
+    </p>
+    <p class="mb-1">
+        <strong>City:</strong>
+        ${order.city || ""}
+    </p>
+    <p class="mb-0">
+        <strong>Pincode:</strong>
+        ${order.pincode || ""}
+    </p>
+</div>
+                    ${itemsHTML}
+                    <div class="d-flex justify-content-between
+                                mt-3">
+                        <strong>
+                            Payment:
+                        </strong>
+                        <span>
+                            ${order.paymentMethod}
+                        </span>
+                    </div>
+                    <div class="d-flex justify-content-between
+                                mt-2">
+                        <strong>
+                            Order Total:
+                        </strong>
+                        <strong class="text-success">
+                            ₹${order.total}
+                        </strong>
+                    </div>
+                    <div class="text-end mt-3">
+    <button
+    class="btn btn-outline-success btn-sm"
+    onclick="viewOrderDetails('${order.id}')">
+    <i class="fa-solid fa-eye"></i>
+    View Details
+</button>
+    ${
+    order.status !== "Delivered" &&
+    order.status !== "Cancelled"
+    ? `
+        <button
+            class="btn btn-outline-danger btn-sm ms-2"
+            onclick="cancelOrder('${order.id}')">
+            <i class="fa-solid fa-xmark"></i>
+            Cancel Order
+        </button>
+    `
+    : ""
+}
+${
+    order.status !== "Delivered" &&
+    order.status !== "Cancelled"
+    ? `
+        <button
+            class="btn btn-outline-warning btn-sm ms-2"
+            onclick="updateOrderStatus('${order.id}')">
+            <i class="fa-solid fa-arrows-rotate"></i>
+            Update Status
+        </button>
+    `
+    : ""
+}
+<button
+    class="btn btn-outline-primary btn-sm ms-2"
+    onclick="reorder('${order.id}')">
+    <i class="fa-solid fa-rotate-right"></i>
+    Reorder
+</button>
+<button
+    class="btn btn-success btn-sm ms-2"
+    onclick="reorder('${order.id}')">
+    <i class="fa-solid fa-cart-plus"></i>
+    Buy Again
+</button>
+</div>
+                </div>
+            </div>
+        `;
+    });
+}
+// CANCEL ORDER //
+function cancelOrder(orderId) {
+    const confirmCancel =
+        confirm(
+            "Are you sure you want to cancel this order?"
+        );
+    if (!confirmCancel) {
+        return;
+    }
+    let savedOrders =
+        JSON.parse(
+            localStorage.getItem("freshMartOrders")
+        ) || [];
+    savedOrders = savedOrders.map(function(order) {
+        if (order.id === orderId) {
+            order.status = "Cancelled";
+        }
+        return order;
+    });
+    localStorage.setItem(
+        "freshMartOrders",
+        JSON.stringify(savedOrders)
+    );
+    location.reload();
+}
+// REORDER //
+function reorder(orderId) {
+    const savedOrders =
+        JSON.parse(
+            localStorage.getItem("freshMartOrders")
+        ) || [];
+    const selectedOrder =
+        savedOrders.find(function(order) {
+            return order.id === orderId;
+        });
+    if (!selectedOrder) {
+        alert("Order not found!");
+        return;
+    }
+    let cart =
+        JSON.parse(
+            localStorage.getItem("freshMartCart")
+        ) || [];
+    selectedOrder.items.forEach(function(product) {
+        const existingProduct =
+            cart.find(function(item) {
+                return item.name === product.name;
+            });
+        if (existingProduct) {
+            existingProduct.quantity +=
+                product.quantity;
+        } else {
+            cart.push({
+                name: product.name,
+                price: product.price,
+                image: product.image,
+                quantity: product.quantity
+            });
+        }
+    });
+    localStorage.setItem(
+        "freshMartCart",
+        JSON.stringify(cart)
+    );
+    alert("Products added to your cart!");
+    window.location.href =
+        "index.html?openCart=true";
+}
+// CLEAR ALL ORDERS //
+function clearAllOrders() {
+    const confirmClear =
+        confirm(
+            "Are you sure you want to delete all orders?"
+        );
+    if (!confirmClear) {
+        return;
+    }
+    localStorage.removeItem(
+        "freshMartOrders"
+    );
+    location.reload();
+}
+// UPDATE ORDER STATUS //
+function updateOrderStatus(orderId) {
+    let savedOrders =
+        JSON.parse(
+            localStorage.getItem("freshMartOrders")
+        ) || [];
+    savedOrders = savedOrders.map(function(order) {
+        if (order.id === orderId) {
+            if (order.status === "Order Placed") {
+                order.status = "Processing";
+            } else if (order.status === "Processing") {
+                order.status = "Shipped";
+            } else if (order.status === "Shipped") {
+                order.status = "Delivered";
+            } else {
+                alert("Order is already delivered.");
+            }
+        }
+        return order;
+    });
+    localStorage.setItem(
+        "freshMartOrders",
+        JSON.stringify(savedOrders)
+    );
+    location.reload();
+}
+// ADD THIS FUNCTION HERE
+
+function getEstimatedDelivery(status) {
+    const date = new Date();
+    if (status === "Order Placed") {
+        date.setDate(date.getDate() + 2);
+    } else if (status === "Processing") {
+        date.setDate(date.getDate() + 1);
+    } else if (status === "Shipped") {
+        date.setDate(date.getDate() + 1);
+    } else if (status === "Delivered") {
+        return "Delivered";
+    } else if (status === "Cancelled") {
+        return "Cancelled";
+    } else {
+        date.setDate(date.getDate() + 2);
+    }
+    return date.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+    });
+}
+// VIEW ORDER DETAILS // 
+function viewOrderDetails(orderId) {
+    const savedOrders =
+        JSON.parse(
+            localStorage.getItem("freshMartOrders")
+        ) || [];
+    const order =
+        savedOrders.find(function(order) {
+            return order.id === orderId;
+        });
+    if (!order) {
+        alert("Order not found!");
+        return;
+    }
+    document.getElementById(
+        "modalOrderId"
+    ).textContent = order.id;
+    document.getElementById(
+        "modalOrderDate"
+    ).textContent = order.date;
+    document.getElementById(
+        "modalOrderStatus"
+    ).textContent = order.status;
+    document.getElementById(
+        "modalPayment"
+    ).textContent = order.paymentMethod;
+    document.getElementById(
+        "modalOrderTotal"
+    ).textContent = "₹" + order.total;
+
+    // SHOW CUSTOMER DETAILS //
+document.getElementById(
+    "modalCustomerName"
+).textContent = order.customerName || "";
+document.getElementById(
+    "modalCustomerPhone"
+).textContent = order.phone || "";
+document.getElementById(
+    "modalCustomerAddress"
+).textContent = order.address || "";
+document.getElementById(
+    "modalCustomerCity"
+).textContent = order.city || "";
+document.getElementById(
+    "modalCustomerPincode"
+).textContent = order.pincode || "";
+
+    // SHOW ORDERED PRODUCTS //
+let modalItemsHTML = "";
+order.items.forEach(function(product) {
+    const itemTotal =
+        product.price * product.quantity;
+    modalItemsHTML += `
+        <div class="d-flex align-items-center border-bottom py-2">
+            <img
+                src="${product.image}"
+                alt="${product.name}"
+                style="
+                    width:55px;
+                    height:55px;
+                    object-fit:contain;
+                ">
+            <div class="ms-3 flex-grow-1">
+                <strong>${product.name}</strong>
+                <br>
+                <small class="text-muted">
+                    ₹${product.price} × ${product.quantity}
+                </small>
+            </div>
+            <strong>
+                ₹${itemTotal}
+            </strong>
+        </div>
+    `;
+});
+document.getElementById(
+    "modalOrderItems"
+).innerHTML = modalItemsHTML;
+    const modal =
+        new bootstrap.Modal(
+            document.getElementById(
+                "orderDetailsModal"
+            )
+        );
+    modal.show();
+}
+// PRINT ORDER RECEIPT
+function printOrderReceipt() {
+    // GET ORDER DETAILS
+    const orderId =
+        document.getElementById("modalOrderId").textContent;
+    const orderDate =
+        document.getElementById("modalOrderDate").textContent;
+    const orderStatus =
+        document.getElementById("modalOrderStatus").textContent;
+    const payment =
+        document.getElementById("modalPayment").textContent;
+    // GET CUSTOMER DETAILS
+    const customerName =
+        document.getElementById("modalCustomerName").textContent;
+    const customerPhone =
+        document.getElementById("modalCustomerPhone").textContent;
+    const customerAddress =
+        document.getElementById("modalCustomerAddress").textContent;
+    const customerCity =
+        document.getElementById("modalCustomerCity").textContent;
+    const customerPincode =
+        document.getElementById("modalCustomerPincode").textContent;
+    // GET TOTAL
+    const orderTotal =
+        document.getElementById("modalOrderTotal").textContent;
+    // GET PRODUCTS
+    const products =
+        document.getElementById("modalOrderItems").innerHTML;
+    // OPEN NEW PRINT WINDOW
+    const receiptWindow =
+        window.open(
+            "",
+            "_blank",
+            "width=800,height=900"
+        );
+    // POPUP BLOCK CHECK
+    if (!receiptWindow) {
+        alert(
+            "Please allow pop-ups in your browser to print the receipt."
+        );
+        return;
+    }
+    // CREATE PRINT PAGE
+    receiptWindow.document.open();
+    receiptWindow.document.write();
+}
+// FILTER ORDERS //
+function filterOrders(status, clickedButton) {
+    // Show / hide orders
+    const orderCards =
+        document.querySelectorAll("#ordersContainer .card");
+    orderCards.forEach(function(card) {
+        if (status === "All") {
+            card.style.display = "";
+            return;
+        }
+        const statusBadge =
+            card.querySelector(".badge");
+        if (!statusBadge) {
+            card.style.display = "none";
+            return;
+        }
+        const orderStatus =
+            statusBadge.textContent.trim();
+        if (orderStatus === status) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }
+    });
+    // Update active filter button
+    const filterButtons =
+        document.querySelectorAll("#orderFilters button");
+    filterButtons.forEach(function(button) {
+        button.classList.remove("active-filter");
+    });
+    clickedButton.classList.add("active-filter");
+}
+// Show "No orders found" message if needed
+    const visibleOrders =
+        Array.from(orderCards).filter(function(card) {
+            return card.style.display !== "none";
+        });
+    const noOrdersFound =
+        document.getElementById("noOrdersFound");
+    if (visibleOrders.length === 0) {
+        noOrdersFound.style.display = "block";
+    } else {
+        noOrdersFound.style.display = "none";
+    }
+// SEARCH ORDERS
+function searchOrders() {
+    const searchText =
+        document.getElementById("orderSearch").value
+        .toLowerCase()
+        .trim();
+    const orderCards =
+        document.querySelectorAll("#ordersContainer .card");
+    let foundOrders = 0;
+    orderCards.forEach(function(card) {
+        // Get Order ID
+        const orderIdElement =
+            card.querySelector(".order-id");
+        // Get Customer Name
+        const customerElement =
+            card.querySelector(".customer-name");
+        const orderId =
+            orderIdElement
+                ? orderIdElement.textContent.toLowerCase()
+                : "";
+        const customerName =
+            customerElement
+                ? customerElement.textContent.toLowerCase()
+                : "";
+        if (
+            searchText === "" ||
+            orderId.includes(searchText) ||
+            customerName.includes(searchText)
+        ) {
+            card.style.display = "";
+            foundOrders++;
+        } else {
+            card.style.display = "none";
+        }
+    });
+    const noOrdersFound =
+        document.getElementById("noOrdersFound");
+    if (foundOrders === 0) {
+        noOrdersFound.style.display = "block";
+    } else {
+        noOrdersFound.style.display = "none";
+    }
+}
+// UPDATE ORDER COUNT
+function updateOrderCount() {
+    const orders =
+        JSON.parse(localStorage.getItem("freshMartOrders")) || [];
+    document.getElementById("orderCount").textContent =
+        orders.length;
+}
+updateOrderCount();
+</script>
+<!-- ORDER DETAILS MODAL -->
+<div
+    class="modal fade"
+    id="orderDetailsModal"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <!-- HEADER -->
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fa-solid fa-receipt text-success"></i>
+                    Order Details
+                </h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+            </div>
+            <!-- BODY -->
+            <div class="modal-body">
+                <p>
+                    <strong>Order ID:</strong>
+                    <span id="modalOrderId"></span>
+                </p>
+                <p>
+                    <strong>Date:</strong>
+                    <span id="modalOrderDate"></span>
+                </p>
+                <p>
+                    <strong>Status:</strong>
+                    <span
+                        id="modalOrderStatus"
+                        class="badge bg-success">
+                    </span>
+                </p>
+                <p>
+                    <strong>Payment:</strong>
+                    <span id="modalPayment"></span>
+                </p>
+                <hr>
+                <!-- CUSTOMER DETAILS -->
+                <h6 class="fw-bold">
+                    <i class="fa-solid fa-user text-primary"></i>
+                    Customer Details
+                </h6>
+                <div class="bg-light rounded p-3 mb-3">
+                    <p class="mb-1">
+                        <strong>Name:</strong>
+                        <span id="modalCustomerName"></span>
+                    </p>
+                    <p class="mb-1">
+                        <strong>Phone:</strong>
+                        <span id="modalCustomerPhone"></span>
+                    </p>
+                    <p class="mb-1">
+                        <strong>Address:</strong>
+                        <span id="modalCustomerAddress"></span>
+                    </p>
+                    <p class="mb-1">
+                        <strong>City:</strong>
+                        <span id="modalCustomerCity"></span>
+                    </p>
+                    <p class="mb-0">
+                        <strong>Pincode:</strong>
+                        <span id="modalCustomerPincode"></span>
+                    </p>
+                </div>
+                <hr>
+                <!-- ORDERED PRODUCTS -->
+                <h6 class="fw-bold">
+                    <i class="fa-solid fa-basket-shopping text-success"></i>
+                    Ordered Products
+                </h6>
+                <div id="modalOrderItems"></div>
+                <hr>
+                <!-- TOTAL -->
+                <div class="d-flex justify-content-between">
+                    <strong>Order Total:</strong>
+                    <strong
+                        id="modalOrderTotal"
+                        class="text-success">
+                    </strong>
+                </div>
+            </div>
+            <!-- FOOTER -->
+            <div class="modal-footer">
+    <button
+        type="button"
+        class="btn btn-success"
+        onclick="printOrderReceipt()">
+        <i class="fa-solid fa-print"></i>
+        Print Receipt
+    </button>
+    <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal">
+        <i class="fa-solid fa-xmark"></i>
+        Close
+    </button>
+</div>
+        </div>
+    </div>
+</div>
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+</body>
+</html>
