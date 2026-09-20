@@ -644,3 +644,125 @@ if (checkoutButton) {
         window.location.href = "checkout.html";
     });
 }
+
+// =========================================
+// PROFILE DROPDOWN
+// =========================================
+
+function toggleProfileMenu() {
+
+    const profileDropdown = document.querySelector(".profile-dropdown");
+
+    if (profileDropdown) {
+        profileDropdown.classList.toggle("active");
+    }
+
+}
+
+
+// Close profile dropdown when clicking outside
+
+document.addEventListener("click", function(event) {
+
+    const profileDropdown = document.querySelector(".profile-dropdown");
+
+    if (!profileDropdown) return;
+
+    if (!profileDropdown.contains(event.target)) {
+        profileDropdown.classList.remove("active");
+    }
+
+});
+
+
+// =========================================
+// OPEN SETTINGS FROM PROFILE MENU
+// =========================================
+
+function openSettingsFromProfile() {
+
+    const profileDropdown = document.querySelector(".profile-dropdown");
+
+    if (profileDropdown) {
+        profileDropdown.classList.remove("active");
+    }
+
+    if (typeof openSettings === "function") {
+        openSettings();
+    } else {
+        window.location.href = "profile.html";
+    }
+
+}
+
+
+// =========================================
+// LOGOUT FROM PROFILE MENU
+// =========================================
+
+function logoutFromProfileMenu() {
+
+    const confirmLogout = confirm("Are you sure you want to logout?");
+
+    if (confirmLogout) {
+
+        localStorage.removeItem("freshMartLoggedIn");
+        localStorage.removeItem("freshMartCurrentUser");
+
+        window.location.href = "login.html";
+
+    }
+
+}
+
+// =========================================
+// SETTINGS PANEL OPEN AND CLOSE
+// =========================================
+
+function openSettings() {
+
+    const settingsOverlay = document.getElementById("settingsOverlay");
+    const settingsPanel = document.getElementById("settingsPanel");
+
+    if (settingsOverlay && settingsPanel) {
+
+        settingsOverlay.classList.add("active");
+        settingsPanel.classList.add("active");
+
+        document.body.classList.add("settings-open");
+
+    } else {
+
+        console.error("Settings panel elements not found.");
+
+    }
+
+}
+
+
+function closeSettings() {
+
+    const settingsOverlay = document.getElementById("settingsOverlay");
+    const settingsPanel = document.getElementById("settingsPanel");
+
+    if (settingsOverlay && settingsPanel) {
+
+        settingsOverlay.classList.remove("active");
+        settingsPanel.classList.remove("active");
+
+        document.body.classList.remove("settings-open");
+
+    }
+
+}
+
+
+// Close settings with Escape key
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape") {
+        closeSettings();
+    }
+
+});
